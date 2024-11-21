@@ -2,7 +2,14 @@
 module.exports = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
-		extend: {},
+		extend: {
+			fontSize: {
+				"5xl": "42px",
+			},
+			minHeight: {
+				32: "7.75rem",
+			},
+		},
 	},
 	plugins: [],
 }
