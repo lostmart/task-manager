@@ -9,10 +9,10 @@ const ErrorPage = () => {
 	}
 	return (
 		<div className="min-h-80 flex flex-col gap-12 items-center justify-center text-zinc-700">
-			<h1 className="text-9xl">404</h1>
+			<h1 className="text-9xl text-shadow">404</h1>
 			<div className="text-center">
-				<p className="text-4xl">Oops...</p>
-				<p className="text-4xl">Page not found</p>
+				<p className="text-4xl text-shadow">Oops...</p>
+				<p className="text-4xl text-shadow">Page not found</p>
 			</div>
 			<ButtonComp text="Back Home" theme="secondary" onClick={handleClick} />
 		</div>
