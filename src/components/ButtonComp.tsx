@@ -21,7 +21,7 @@ const ButtonComp: React.FC<ButtonProps> = ({
 	return (
 		<button
 			className={`h-12 w-48 text-shadow ${background} ${textColor}`}
-			onClick={() => handleClick}
+			onClick={handleClick}
 		>
 			{text}
 		</button>
