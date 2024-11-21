@@ -6,7 +6,7 @@ This repository contains the frontend of a Task Manager application built with *
 
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Figma Project](#https://www.figma.com/design/aFEH6jqcFX6R2rRoyNoosQ/task-management?node-id=0-1&node-type=canvas&t=HmjiyCaPiORA2YFN-0)
+- [Figma Project](https://www.figma.com/design/aFEH6jqcFX6R2rRoyNoosQ/task-management?node-id=0-1&node-type=canvas&t=HmjiyCaPiORA2YFN-0)
 - [Getting Started](#getting-started)
 - [Customizations](#customizations)
   - [Extended Tailwind Classes](#extended-tailwind-classes)
