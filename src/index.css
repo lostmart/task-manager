@@ -10,3 +10,8 @@
 .text-shadow {
 	text-shadow: 0 4px 4px #00000025;
 }
+
+.modal-backdrop {
+	background-color: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(2px);
+}
