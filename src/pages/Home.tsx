@@ -8,7 +8,7 @@ const Home = () => {
 		console.log("you need to run the sign up request")
 	}
 	return (
-		<section className="min-h-96 flex flex-col items-center justify-center">
+		<section className="min-h-80 flex flex-col items-center justify-center">
 			<h2 className="my-28 text-5xl leading-subTitle text-zinc-700 max-w-sm text-center text-shadow ">
 				Welcome to the Epita's Task Manager
 			</h2>
