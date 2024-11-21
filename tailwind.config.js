@@ -9,6 +9,9 @@ module.exports = {
 			minHeight: {
 				32: "7.75rem",
 			},
+			lineHeight: {
+				subTitle: "50px", // Add custom line-height
+			},
 		},
 	},
 	plugins: [],

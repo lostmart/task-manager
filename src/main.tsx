@@ -20,14 +20,16 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<>
-		<BannerComp text="Task Manager!" />
-		<React.StrictMode>
-			<RouterProvider
-				router={router}
-				future={{
-					v7_startTransition: true,
-				}}
-			/>
-		</React.StrictMode>
+		<BannerComp text="Task Management" />
+		<main className="bg-zinc-100">
+			<React.StrictMode>
+				<RouterProvider
+					router={router}
+					future={{
+						v7_startTransition: true,
+					}}
+				/>
+			</React.StrictMode>
+		</main>
 	</>
 )
