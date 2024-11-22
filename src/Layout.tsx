@@ -10,7 +10,7 @@ import ModalComp from "./components/layout/ModalComp.tsx"
 const Layout = () => {
 	return (
 		<>
-			<ModalComp show={false} />
+			<ModalComp show={true} />
 			<BannerComp text="Task Management" />
 			<main className="bg-zinc-100">
 				<React.StrictMode>
