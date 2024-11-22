@@ -3,9 +3,13 @@ import ButtonComp from "../ui/ButtonComp"
 
 interface ModalProps {
 	show: boolean
+	clickClose: () => void
 }
 
-const ModalComp: React.FC<ModalProps> = ({ show }) => {
+const ModalComp: React.FC<ModalProps> = ({ show, clickClose }) => {
+	const handleClick = () => {
+		clickClose()
+	}
 	return (
 		<div
 			className={`fixed w-full h-full inset-0 z-50 modal-backdrop p-3 ${
@@ -15,7 +19,7 @@ const ModalComp: React.FC<ModalProps> = ({ show }) => {
 			<div className="w-full max-w-2xl lg:max-w-104 mx-auto my-8 bg-zinc-100">
 				<header className="h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-5 flex items-center justify-between text-zinc-700 relative">
 					Confirm
-					<span>
+					<span role="button" onClick={handleClick}>
 						<FaXmark />
 					</span>
 				</header>

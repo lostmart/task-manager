@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 // router
 import { RouterProvider } from "react-router-dom"
 import router from "./Router.tsx"
@@ -8,9 +8,15 @@ import BannerComp from "./components/layout/BannerComp.tsx"
 import ModalComp from "./components/layout/ModalComp.tsx"
 
 const Layout = () => {
+	const [showModal, setShowModal] = useState(true)
+
+	const handleClick = () => {
+		setShowModal((prev) => !prev)
+	}
+
 	return (
 		<>
-			<ModalComp show={true} />
+			<ModalComp show={showModal} clickClose={handleClick} />
 			<BannerComp text="Task Management" />
 			<main className="bg-zinc-100">
 				<React.StrictMode>
