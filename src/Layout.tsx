@@ -4,13 +4,13 @@ import { RouterProvider } from "react-router-dom"
 import router from "./Router.tsx"
 
 // components
-import BannerComp from "./components/BannerComp.tsx"
-import ModalComp from "./components/ModalComp.tsx"
+import BannerComp from "./components/layout/BannerComp.tsx"
+import ModalComp from "./components/layout/ModalComp.tsx"
 
 const Layout = () => {
 	return (
 		<>
-			<ModalComp />
+			<ModalComp show={false} />
 			<BannerComp text="Task Management" />
 			<main className="bg-zinc-100">
 				<React.StrictMode>

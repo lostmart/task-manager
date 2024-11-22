@@ -1,4 +1,4 @@
-import ButtonComp from "../components/ButtonComp"
+import ButtonComp from "../components/ui/ButtonComp"
 
 const Home = () => {
 	const logIn = () => {

@@ -1,5 +1,5 @@
 import React from "react"
-import { themeStyles } from "../styles"
+import { themeStyles } from "../../styles"
 
 interface BannerProps {
 	text: string
