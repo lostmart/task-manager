@@ -6,7 +6,7 @@ interface TAppContext {
 }
 
 const ModalContext = createContext<TAppContext>({
-	showModal: false,
+	showModal: true,
 	setShowModal: () => true,
 })
 
