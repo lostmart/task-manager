@@ -1,4 +1,3 @@
-import React, { useContext } from "react"
 // router
 import { RouterProvider } from "react-router-dom"
 import router from "./Router.tsx"
@@ -8,21 +7,13 @@ import BannerComp from "./components/layout/BannerComp.tsx"
 import ModalComp from "./components/layout/ModalComp.tsx"
 
 // context
-import ModalProvider from "./context/ModalProvider.tsx"
-import ModalContext from "./context/modalContext.ts"
+
+import React from "react"
 
 const Layout = () => {
-	const { showModal, setShowModal } = useContext(ModalContext)
-
-	const handleClick = () => {
-		console.log("run the clsoe cont")
-
-		setShowModal(() => false)
-	}
-
 	return (
-		<ModalProvider>
-			<ModalComp show={showModal} clickClose={handleClick} />
+		<>
+			<ModalComp />
 			<BannerComp text="Task Management" />
 			<main className="bg-zinc-100">
 				<React.StrictMode>
@@ -32,7 +23,7 @@ const Layout = () => {
 					/>
 				</React.StrictMode>
 			</main>
-		</ModalProvider>
+		</>
 	)
 }
 

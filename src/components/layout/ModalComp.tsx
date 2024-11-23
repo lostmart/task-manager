@@ -1,26 +1,29 @@
 import { FaXmark } from "react-icons/fa6"
 import ButtonComp from "../ui/ButtonComp"
-import { useEffect, useRef } from "react"
+import { useContext, useEffect, useRef, useCallback } from "react"
+import ModalContext from "../../context/modalContext"
 
-interface ModalProps {
-	show: boolean
-	clickClose: () => void
-}
+const ModalComp: React.FC = () => {
+	const { showModal, setShowModal } = useContext(ModalContext)
+	console.log("Modal Context - showModal:", showModal)
+	console.log("Modal Context - setShowModal:", setShowModal)
 
-const ModalComp: React.FC<ModalProps> = ({ show, clickClose }) => {
+	// Memoize handleClick to avoid re-creating it on every render
+	const handleClick = useCallback(() => {
+		console.log("Setting showModal to false", showModal)
+		setShowModal(false)
+	}, [setShowModal, showModal])
 
-	console.log(show);
-	
 	const modalRef = useRef<HTMLDivElement | null>(null)
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
-				clickClose()
+				handleClick()
 			}
 		}
 
-		if (show) {
+		if (showModal) {
 			document.addEventListener("keydown", handleKeyDown)
 		} else {
 			document.removeEventListener("keydown", handleKeyDown)
@@ -29,23 +32,20 @@ const ModalComp: React.FC<ModalProps> = ({ show, clickClose }) => {
 		return () => {
 			document.removeEventListener("keydown", handleKeyDown)
 		}
-	}, [show, clickClose])
+	}, [showModal, handleClick])
 
-	if (!show) {
+	if (!showModal) {
 		return null
-	}
-	const handleClick = () => {
-		clickClose()
 	}
 	return (
 		<div
 			ref={modalRef}
 			className={`fixed w-full h-full inset-0 z-50 modal-backdrop p-3 ${
-				!show && "hidden"
+				!showModal && "hidden"
 			} `}
 			role="dialog"
 			aria-modal="true"
-			aria-hidden={!show}
+			aria-hidden={!showModal}
 		>
 			<div className="w-full max-w-2xl lg:max-w-104 mx-auto my-8 bg-zinc-100">
 				<header className="h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-5 flex items-center justify-between text-zinc-700 relative">

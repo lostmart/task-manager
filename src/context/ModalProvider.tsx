@@ -1,16 +1,21 @@
-import { ReactNode, useState } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import ModalContext from "./modalContext"
 
 interface ModalProviderProps {
-	children: ReactNode
+	children: React.ReactNode
 }
 
-const ModalProvider = ({ children }: ModalProviderProps) => {
-	// useState
+const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 	const [showModal, setShowModal] = useState(false)
 
+	useEffect(() => {
+		console.log("Provider - showModal changed:", showModal)
+	}, [showModal])
+
+	const contextValue = useMemo(() => ({ showModal, setShowModal }), [showModal])
+
 	return (
-		<ModalContext.Provider value={{ showModal, setShowModal }}>
+		<ModalContext.Provider value={contextValue}>
 			{children}
 		</ModalContext.Provider>
 	)

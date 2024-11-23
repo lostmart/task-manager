@@ -1,13 +1,15 @@
 import { createContext } from "react"
 
-interface TAppContext {
+interface ModalContextProps {
 	showModal: boolean
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ModalContext = createContext<TAppContext>({
+const ModalContext = createContext<ModalContextProps>({
 	showModal: false,
-	setShowModal: () => true,
+	setShowModal: () => {
+		console.warn("setShowModal not implemented")
+	},
 })
 
 export default ModalContext
