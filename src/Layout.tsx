@@ -13,18 +13,18 @@ import ModalProvider from "./context/ModalProvider"
 const Layout = () => {
 	return (
 		<>
-			<ModalProvider>
-				<ModalComp />
-				<BannerComp text="Task Management" />
-				<main className="bg-zinc-100">
-					<React.StrictMode>
+			<React.StrictMode>
+				<ModalProvider>
+					<ModalComp />
+					<BannerComp text="Task Management" />
+					<main className="bg-zinc-100">
 						<RouterProvider
 							router={router}
 							future={{ v7_startTransition: true }}
 						/>
-					</React.StrictMode>
-				</main>
-			</ModalProvider>
+					</main>
+				</ModalProvider>
+			</React.StrictMode>
 		</>
 	)
 }

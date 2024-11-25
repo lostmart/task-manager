@@ -1,16 +1,21 @@
+// context
 import { useContext } from "react"
+import ModalContext from "../context/ModalContext"
+
+// components
 import ButtonComp from "../components/ui/ButtonComp"
-import ModalContext, { IModalBody } from "../context/ModalContext"
+import UserComp from "../components/layout/UserComp"
 
 const Home = () => {
 	const { setModalData } = useContext(ModalContext)
 
 	const logIn = () => {
-		setModalData((prev: IModalBody) => {
-			return {
-				...prev,
-			}
-		})
+		setModalData((prev) => ({
+			...prev,
+			showModal: true,
+			bodyContent: <UserComp />,
+			modalTitle: "Log In",
+		}))
 	}
 	const signUp = () => {
 		// setModalData((prev) => !prev)

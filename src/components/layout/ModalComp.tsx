@@ -63,7 +63,7 @@ const ModalComp: React.FC = () => {
 		>
 			<div className="w-full max-w-2xl lg:max-w-104 mx-auto my-8 bg-zinc-100">
 				<header className="h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-5 flex items-center justify-between text-zinc-700 relative">
-					Confirm
+					{modalData?.modalTitle}
 					<button
 						type="button"
 						aria-label="Close modal"

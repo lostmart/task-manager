@@ -8,8 +8,9 @@ interface ModalProviderProps {
 }
 
 const emptyData: IModalBody = {
-	showModal: true,
+	showModal: false,
 	bodyContent: "Hello test",
+	modalTitle: "",
 }
 
 const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
