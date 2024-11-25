@@ -1,15 +1,31 @@
 import { FaXmark } from "react-icons/fa6"
 import ButtonComp from "../ui/ButtonComp"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import ModalContext from "../../context/ModalContext"
 
 const ModalComp: React.FC = () => {
 	const { showModal, setShowModal } = useContext(ModalContext)
-	const handleCrossClick = () => {
+	const handleCrossClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+		e.stopPropagation()
 		setShowModal((prev: boolean) => {
 			return !prev
 		})
 	}
+	useEffect(() => {
+		window.addEventListener("click", (e: MouseEvent) => {
+			console.log("running anyway ...")
+
+			if (e.target instanceof HTMLDivElement) {
+				if (e.target.classList.contains("modal-backdrop")) {
+					console.log("running the set modal")
+
+					setShowModal((prev: boolean) => {
+						return !prev
+					})
+				}
+			}
+		})
+	})
 	return (
 		<div
 			className={`fixed w-full h-full inset-0 z-50 modal-backdrop p-3 ${
