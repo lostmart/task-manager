@@ -5,7 +5,9 @@ import ModalContext from "../../context/ModalContext"
 
 const ModalComp: React.FC = () => {
 	const { showModal, setShowModal } = useContext(ModalContext)
-	const handleCrossClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+	const handleCrossClick = (
+		e: React.MouseEvent<HTMLElement> | React.MouseEvent<HTMLButtonElement>
+	) => {
 		e.stopPropagation()
 		setShowModal((prev: boolean) => {
 			return !prev
@@ -52,7 +54,7 @@ const ModalComp: React.FC = () => {
 					<ButtonComp
 						text="Cancel"
 						theme="neutral"
-						onClick={handleCrossClick}
+						onClick={() => handleCrossClick}
 					/>
 					<ButtonComp text="Send" onClick={() => true} />
 				</footer>
