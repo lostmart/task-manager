@@ -1,11 +1,15 @@
+import { useContext } from "react"
 import ButtonComp from "../components/ui/ButtonComp"
+import ModalContext from "../context/ModalContext"
 
 const Home = () => {
+	const { setShowModal } = useContext(ModalContext)
+
 	const logIn = () => {
-		console.log("you need to run the log in request")
+		setShowModal((prev) => !prev)
 	}
 	const signUp = () => {
-		console.log("you need to run the sign up request")
+		setShowModal((prev) => !prev)
 	}
 	return (
 		<section className="min-h-80 flex flex-col items-center justify-center">

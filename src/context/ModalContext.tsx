@@ -6,7 +6,7 @@ interface ModalContextProps {
 }
 
 const ModalContext = createContext<ModalContextProps>({
-	showModal: true,
+	showModal: false,
 	setShowModal: () => {
 		return (prev: boolean) => !prev
 	},

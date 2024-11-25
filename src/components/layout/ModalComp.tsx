@@ -22,12 +22,24 @@ const ModalComp: React.FC = () => {
 		[setShowModal]
 	)
 
+	const handleKeyDown = useCallback(
+		(e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				setShowModal(false)
+			}
+		},
+		[setShowModal]
+	)
+
 	useEffect(() => {
 		window.addEventListener("click", toggleModal)
+		window.addEventListener("keydown", handleKeyDown)
+
 		return () => {
 			window.removeEventListener("click", toggleModal)
+			window.removeEventListener("keydown", handleKeyDown)
 		}
-	}, [toggleModal])
+	}, [toggleModal, handleKeyDown])
 
 	return (
 		<div
