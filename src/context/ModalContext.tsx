@@ -1,13 +1,18 @@
 import { createContext } from "react"
 
-interface ModalContextProps {
+export interface IModalBody {
 	showModal: boolean
-	setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+	bodyContent: string | HTMLElement[] // Accepts either a string or an array of HTML node elements
+}
+
+interface ModalContextProps {
+	modalData: IModalBody | null
+	setModalData: React.Dispatch<React.SetStateAction<IModalBody>>
 }
 
 const ModalContext = createContext<ModalContextProps>({
-	showModal: false,
-	setShowModal: () => {
+	modalData: null,
+	setModalData: () => {
 		return (prev: boolean) => !prev
 	},
 })
