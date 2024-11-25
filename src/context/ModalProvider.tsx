@@ -8,7 +8,7 @@ interface ModalProviderProps {
 }
 
 const emptyData: IModalBody = {
-	showModal: false,
+	showModal: true,
 	bodyContent: "Hello test",
 }
 

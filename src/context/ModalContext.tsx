@@ -2,7 +2,7 @@ import { createContext } from "react"
 
 export interface IModalBody {
 	showModal: boolean
-	bodyContent: string | HTMLElement[] // Accepts either a string or an array of HTML node elements
+	bodyContent: string | React.ReactNode // Accepts either a string or a react node
 }
 
 interface ModalContextProps {
@@ -12,8 +12,10 @@ interface ModalContextProps {
 
 const ModalContext = createContext<ModalContextProps>({
 	modalData: null,
-	setModalData: () => {
-		return (prev: boolean) => !prev
+	setModalData: (prev) => {
+		return {
+			...prev,
+		}
 	},
 })
 

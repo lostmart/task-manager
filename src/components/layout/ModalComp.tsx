@@ -4,33 +4,45 @@ import { useContext, useEffect, useCallback } from "react"
 import ModalContext from "../../context/ModalContext"
 
 const ModalComp: React.FC = () => {
-	const { showModal, setShowModal } = useContext(ModalContext)
+	const { modalData, setModalData } = useContext(ModalContext)
 
-	const handleCrossClick = () => {
-		setShowModal((prev) => !prev)
-	}
+	// Memoized version of closeModal using useCallback
+	const closeModal = useCallback(() => {
+		setModalData((prev) => ({
+			...prev,
+			showModal: false,
+		}))
+	}, [setModalData])
 
+	// Memoized version of handleCrossClick using useCallback
+	const handleCrossClick = useCallback(() => {
+		closeModal()
+	}, [closeModal])
+
+	// Toggle modal when clicking outside of modal content
 	const toggleModal = useCallback(
 		(e: MouseEvent) => {
 			if (
 				e.target instanceof HTMLDivElement &&
 				e.target.classList.contains("modal-backdrop")
 			) {
-				setShowModal((prev) => !prev)
+				closeModal()
 			}
 		},
-		[setShowModal]
+		[closeModal]
 	)
 
+	// Close modal when the "Escape" key is pressed
 	const handleKeyDown = useCallback(
 		(e: KeyboardEvent) => {
 			if (e.key === "Escape") {
-				setShowModal(false)
+				closeModal()
 			}
 		},
-		[setShowModal]
+		[closeModal]
 	)
 
+	// Add and clean up event listeners
 	useEffect(() => {
 		window.addEventListener("click", toggleModal)
 		window.addEventListener("keydown", handleKeyDown)
@@ -44,7 +56,7 @@ const ModalComp: React.FC = () => {
 	return (
 		<div
 			className={`fixed w-full h-full inset-0 z-50 modal-backdrop p-3 ${
-				!showModal && "hidden"
+				!modalData?.showModal && "hidden"
 			}`}
 			role="dialog"
 			aria-modal="true"
@@ -61,7 +73,7 @@ const ModalComp: React.FC = () => {
 					</button>
 				</header>
 				<div className="p-5 min-h-48 flex items-center justify-center text-2xl md:text-3xl lg:text-4xl text-zinc-700">
-					the body
+					{modalData?.bodyContent}
 				</div>
 				<footer className="h-20 bg-zinc-200 px-5 flex gap-4 items-center justify-end">
 					<ButtonComp
