@@ -11,6 +11,7 @@ const emptyData: IModalBody = {
 	showModal: false,
 	bodyContent: "Hello test",
 	modalTitle: "",
+	confirmFn: () => true,
 }
 
 const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {

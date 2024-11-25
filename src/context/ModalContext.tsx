@@ -4,6 +4,7 @@ export interface IModalBody {
 	modalTitle: string
 	showModal: boolean
 	bodyContent: string | React.ReactNode // Accepts either a string or a react node
+	confirmFn: () => void
 }
 
 interface ModalContextProps {

@@ -1,10 +1,11 @@
 import InputGroup from "../ui/InputGroup"
-import { FaRegEnvelope } from "react-icons/fa6"
+import { FaRegEnvelope, FaRegUser } from "react-icons/fa6"
 
 const UserComp = () => {
 	return (
-		<form>
+		<form className="flex flex-col gap-4">
 			<InputGroup inputId="email" icon={FaRegEnvelope} />
+			<InputGroup inputId="username" icon={FaRegUser} />
 		</form>
 	)
 }
