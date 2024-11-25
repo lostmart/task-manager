@@ -1,3 +1,4 @@
+import React from "react"
 // router
 import { RouterProvider } from "react-router-dom"
 import router from "./Router.tsx"
@@ -7,22 +8,23 @@ import BannerComp from "./components/layout/BannerComp.tsx"
 import ModalComp from "./components/layout/ModalComp.tsx"
 
 // context
-
-import React from "react"
+import ModalProvider from "./context/ModalProvider"
 
 const Layout = () => {
 	return (
 		<>
-			<ModalComp />
-			<BannerComp text="Task Management" />
-			<main className="bg-zinc-100">
-				<React.StrictMode>
-					<RouterProvider
-						router={router}
-						future={{ v7_startTransition: true }}
-					/>
-				</React.StrictMode>
-			</main>
+			<ModalProvider>
+				<ModalComp />
+				<BannerComp text="Task Management" />
+				<main className="bg-zinc-100">
+					<React.StrictMode>
+						<RouterProvider
+							router={router}
+							future={{ v7_startTransition: true }}
+						/>
+					</React.StrictMode>
+				</main>
+			</ModalProvider>
 		</>
 	)
 }
