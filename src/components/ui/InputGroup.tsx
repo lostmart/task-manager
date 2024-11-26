@@ -4,12 +4,14 @@ import { IconType } from "react-icons"
 interface InputGroupProps {
 	inputId: string
 	icon: IconType
+	onchange?: (value: string, inputId: string) => void
 }
 
-const InputGroup = ({ inputId, icon: Icon }: InputGroupProps) => {
+const InputGroup = ({ inputId, icon: Icon, onchange }: InputGroupProps) => {
 	const [inputVal, setInputVal] = useState<string>("")
 	const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputVal(e.target.value)
+		if (onchange && typeof onchange === "function") onchange(e.target.value, inputId)
 	}
 	return (
 		<div className="flex border-solid border-zinc-400 border-2">
