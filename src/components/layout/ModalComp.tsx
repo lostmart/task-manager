@@ -1,5 +1,4 @@
 import { FaXmark } from "react-icons/fa6"
-import ButtonComp from "../ui/ButtonComp"
 import { useContext, useEffect, useCallback } from "react"
 import ModalContext from "../../context/ModalContext"
 
@@ -72,17 +71,17 @@ const ModalComp: React.FC = () => {
 						<FaXmark />
 					</button>
 				</header>
-				<div className="p-3 min-h-48 flex items-center justify-center text-2xl md:text-3xl md:p-5 lg:text-4xl text-zinc-700">
+				<div className="min-h-48 flex items-center justify-center text-2xl md:text-3xl lg:text-4xl text-zinc-700">
 					{modalData?.bodyContent}
 				</div>
-				<footer className="h-20 bg-zinc-200 flex gap-4 items-center justify-end px-3 md:px-5">
+				{/* <footer className="h-20 bg-zinc-200 flex gap-4 items-center justify-end px-3 md:px-5">
 					<ButtonComp
 						text="Cancel"
 						theme="neutral"
 						onClick={handleCrossClick}
 					/>
 					<ButtonComp text="Send" onClick={() => true} />
-				</footer>
+				</footer> */}
 			</div>
 		</div>
 	)
