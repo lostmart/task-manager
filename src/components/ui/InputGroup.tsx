@@ -11,7 +11,8 @@ const InputGroup = ({ inputId, icon: Icon, onchange }: InputGroupProps) => {
 	const [inputVal, setInputVal] = useState<string>("")
 	const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputVal(e.target.value)
-		if (onchange && typeof onchange === "function") onchange(e.target.value, inputId)
+		if (onchange && typeof onchange === "function")
+			onchange(e.target.value, inputId)
 	}
 	return (
 		<div className="flex border-solid border-zinc-400 border-2">

@@ -35,6 +35,74 @@ This repository contains the frontend of a Task Manager application built with *
 
 ---
 
+## Folder structure
+
+```
+src/
+  app/                      # App-wide wiring
+    App.tsx
+    routes.tsx              # React Router routes (code-split per feature)
+    providers/              # QueryClient, ThemeProvider, etc.
+      QueryProvider.tsx
+      ThemeProvider.tsx
+    layout/                 # Shell layouts (MainLayout, AuthLayout)
+
+  features/                 # One folder per domain feature
+    auth/
+      api/auth.api.ts       # login, register, me
+      components/           # <LoginForm />, <UserMenu />
+      pages/                # route-level components (LoginPage, RegisterPage)
+      hooks/                # useLogin(), useCurrentUser()
+      types/                # Auth DTOs
+    projects/
+      api/projects.api.ts
+      components/           # <ProjectCard />, <ProjectForm />
+      pages/                # ProjectsListPage, ProjectDetailPage
+      hooks/                # useProjects(), useCreateProject()
+      types/
+    tasks/
+      api/tasks.api.ts
+      components/           # <TaskCard />, <TaskForm />, <TaskKanban />
+      pages/                # TasksPage (or nested under project routes)
+      hooks/                # useTasksByProject(), useUpdateTask()
+      types/
+    users/
+      api/users.api.ts
+      components/
+      pages/
+      hooks/
+      types/
+
+  components/               # App-wide reusable UI (not feature-specific)
+    ui/                     # Buttons, Inputs, Modals, Tabs, Toast, etc.
+    feedback/               # EmptyState, Spinner, ErrorBoundary
+    navigation/             # Sidebar, Topbar, Breadcrumbs
+
+  api/                      # Low-level HTTP client + interceptors
+    client.ts               # axios/fetch wrapper reads VITE_API_URL
+    errors.ts               # error normalization
+    auth.ts                 # token storage helpers (get/set/clear)
+
+  lib/                      # Third-party singletons & helpers
+    queryClient.ts          # TanStack Query client
+    form.ts                 # react-hook-form + zod resolver helpers
+    router.ts               # createBrowserRouter() if you prefer centralization
+
+  store/                    # Global state (if needed beyond React Query)
+    theme.store.ts          # e.g., Zustand for theme or UI prefs
+
+  styles/
+    index.css               # Tailwind base/imports
+    theme.ts                # your theme map (moved from styles.ts)
+                           # e.g. export const themeStyles = {...}
+
+  assets/                   # svg, images, fonts
+  utils/                    # pure utilities (dates, ids, formatting)
+  types/                    # shared types (API primitives, pagination)
+  config/
+    env.ts                  # typed env loader (VITE_API_URL, etc.)
+```
+
 ## Getting Started
 
 ### Prerequisites

@@ -16,6 +16,8 @@ const UserComp = () => {
 	console.log(userDataForm)
 
 	const handleUserDataUpdate = (value: string, inputId: string) => {
+		console.log(inputId)
+
 		setUserDataForm((prev) => {
 			// prev is guaranteed to exist since we no longer allow null
 			if (inputId === "email") {
@@ -35,7 +37,7 @@ const UserComp = () => {
 	}
 
 	return (
-		<form className="flex flex-col gap-4">
+		<form onSubmit={() => true} className="flex flex-col gap-4">
 			<InputGroup
 				inputId="email"
 				icon={FaRegEnvelope}
