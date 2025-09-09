@@ -13,11 +13,21 @@ interface UserCompProps {
 	handleCancelProp: () => void
 }
 
+interface IResponseError {
+	data: {
+		error: string
+	}
+	status: number
+	statusText: string
+}
+
 const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 	const [userDataForm, setUserDataForm] = useState<IUserDataForm>({
 		userEmail: "",
 		userPassword: "",
 	})
+
+	const [error, setError] = useState<string>("")
 
 	const [showPassword, setShowPassword] = useState(false)
 
@@ -46,17 +56,20 @@ const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		// Handle form submission
+		setError("")
 		e.preventDefault()
 		console.log("Form submitted:", userDataForm)
 		try {
-			const res = await apiClient.post("/auth/login", {
+			const res = await apiClient.post("/api/users/login", {
 				email: userDataForm.userEmail,
 				password: userDataForm.userPassword,
 			})
 			console.log("Login success:", res.data)
 			// maybe save token -> localStorage.setItem("auth_token", res.data.token)
-		} catch (err) {
-			console.error("Login failed:", err)
+		} catch (err: IResponseError | any) {
+			console.error("Login failed:", err?.response)
+			const error = err?.response?.data.error
+			setError(error)
 		}
 	}
 
@@ -77,6 +90,7 @@ const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 					trailingIcon={showPassword ? FaRegEyeSlash : FaRegEye}
 					onTrailingIconClick={() => setShowPassword((prev) => !prev)}
 				/>
+				<div>{error && <p className="text-red-500">{error}</p>}</div>
 			</div>
 			<footer className="h-20 bg-zinc-200 flex gap-4 items-center justify-end px-3 md:px-5">
 				<ButtonComp text="Cancel" theme="neutral" onClick={handleCancel} />
