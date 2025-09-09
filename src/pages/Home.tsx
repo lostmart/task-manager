@@ -1,18 +1,32 @@
+// context
+import { useContext } from "react"
+import ModalContext from "../context/ModalContext"
+
+// components
 import ButtonComp from "../components/ui/ButtonComp"
+import UserComp from "../components/layout/UserComp"
 
 const Home = () => {
+	const { setModalData } = useContext(ModalContext)
+
 	const logIn = () => {
-		console.log("you need to run the log in request")
+		setModalData((prev) => ({
+			...prev,
+			showModal: true,
+			bodyContent: <UserComp />,
+			modalTitle: "Log In",
+		}))
 	}
 	const signUp = () => {
-		console.log("you need to run the sign up request")
+		// setModalData((prev) => !prev)
+		return
 	}
 	return (
 		<section className="min-h-80 flex flex-col items-center justify-center">
-			<h2 className="my-28 text-5xl leading-subTitle text-zinc-700 max-w-sm text-center text-shadow ">
-				Welcome to the Epita's Task Manager
+			<h2 className="my-24 text-4xl leading-subTitle text-zinc-700 max-w-lg text-center text-shadow ">
+				Welcome to PMT (Poject Management Tool)
 			</h2>
-			<div className="flex flex-col gap-7">
+			<div className="flex flex-col md:flex-row gap-7">
 				<ButtonComp text="LogIn" theme="secondary" onClick={logIn} />
 				<ButtonComp text="SignUp" onClick={signUp} />
 			</div>

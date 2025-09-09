@@ -1,64 +1,86 @@
 import { FaXmark } from "react-icons/fa6"
 import ButtonComp from "../ui/ButtonComp"
-import { useContext, useEffect, useRef, useCallback } from "react"
-import ModalContext from "../../context/modalContext"
+import { useContext, useEffect, useCallback } from "react"
+import ModalContext from "../../context/ModalContext"
 
 const ModalComp: React.FC = () => {
-	const { showModal, setShowModal } = useContext(ModalContext)
-	console.log("Modal Context - showModal:", showModal)
-	console.log("Modal Context - setShowModal:", setShowModal)
+	const { modalData, setModalData } = useContext(ModalContext)
 
-	// Memoize handleClick to avoid re-creating it on every render
-	const handleClick = useCallback(() => {
-		console.log("Setting showModal to false", showModal)
-		setShowModal(false)
-	}, [setShowModal, showModal])
+	// Memoized version of closeModal using useCallback
+	const closeModal = useCallback(() => {
+		setModalData((prev) => ({
+			...prev,
+			showModal: false,
+		}))
+	}, [setModalData])
 
-	const modalRef = useRef<HTMLDivElement | null>(null)
+	// Memoized version of handleCrossClick using useCallback
+	const handleCrossClick = useCallback(() => {
+		closeModal()
+	}, [closeModal])
 
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				handleClick()
+	// Toggle modal when clicking outside of modal content
+	const toggleModal = useCallback(
+		(e: MouseEvent) => {
+			if (
+				e.target instanceof HTMLDivElement &&
+				e.target.classList.contains("modal-backdrop")
+			) {
+				closeModal()
 			}
-		}
+		},
+		[closeModal]
+	)
 
-		if (showModal) {
-			document.addEventListener("keydown", handleKeyDown)
-		} else {
-			document.removeEventListener("keydown", handleKeyDown)
-		}
+	// Close modal when the "Escape" key is pressed
+	const handleKeyDown = useCallback(
+		(e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				closeModal()
+			}
+		},
+		[closeModal]
+	)
+
+	// Add and clean up event listeners
+	useEffect(() => {
+		window.addEventListener("click", toggleModal)
+		window.addEventListener("keydown", handleKeyDown)
 
 		return () => {
-			document.removeEventListener("keydown", handleKeyDown)
+			window.removeEventListener("click", toggleModal)
+			window.removeEventListener("keydown", handleKeyDown)
 		}
-	}, [showModal, handleClick])
+	}, [toggleModal, handleKeyDown])
 
-	if (!showModal) {
-		return null
-	}
 	return (
 		<div
-			ref={modalRef}
 			className={`fixed w-full h-full inset-0 z-50 modal-backdrop p-3 ${
-				!showModal && "hidden"
-			} `}
+				!modalData?.showModal && "hidden"
+			}`}
 			role="dialog"
 			aria-modal="true"
-			aria-hidden={!showModal}
 		>
 			<div className="w-full max-w-2xl lg:max-w-104 mx-auto my-8 bg-zinc-100">
 				<header className="h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-5 flex items-center justify-between text-zinc-700 relative">
-					Confirm
-					<span role="button" aria-label="Close modal" onClick={handleClick}>
+					{modalData?.modalTitle}
+					<button
+						type="button"
+						aria-label="Close modal"
+						onClick={handleCrossClick}
+					>
 						<FaXmark />
-					</span>
+					</button>
 				</header>
 				<div className="p-5 min-h-48 flex items-center justify-center text-2xl md:text-3xl lg:text-4xl text-zinc-700">
-					the body
+					{modalData?.bodyContent}
 				</div>
 				<footer className="h-20 bg-zinc-200 px-5 flex gap-4 items-center justify-end">
-					<ButtonComp text="Cancel" theme="neutral" onClick={() => true} />
+					<ButtonComp
+						text="Cancel"
+						theme="neutral"
+						onClick={handleCrossClick}
+					/>
 					<ButtonComp text="Send" onClick={() => true} />
 				</footer>
 			</div>
