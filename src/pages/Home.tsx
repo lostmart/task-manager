@@ -13,8 +13,15 @@ const Home = () => {
 		setModalData((prev) => ({
 			...prev,
 			showModal: true,
-			bodyContent: <UserComp />,
+			bodyContent: <UserComp handleCancelProp={handleCancel} />,
 			modalTitle: "Log In",
+		}))
+	}
+	const handleCancel = () => {
+		console.log("Cancel")
+		setModalData((prev) => ({
+			...prev,
+			showModal: false,
 		}))
 	}
 	const signUp = () => {

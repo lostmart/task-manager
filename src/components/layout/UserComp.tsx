@@ -1,22 +1,23 @@
 import { useState } from "react"
 import InputGroup from "../ui/InputGroup"
 import { FaRegEnvelope, FaLock, FaRegEye, FaRegEyeSlash } from "react-icons/fa6"
-import logger from "../../utils/logger"
 import ButtonComp from "../ui/ButtonComp"
+import apiClient from "../../api/client"
 
 interface IUserDataForm {
 	userEmail: string
 	userPassword: string
 }
 
-const UserComp = () => {
+interface UserCompProps {
+	handleCancelProp: () => void
+}
+
+const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 	const [userDataForm, setUserDataForm] = useState<IUserDataForm>({
 		userEmail: "",
 		userPassword: "",
 	})
-
-	logger.info(userDataForm, "the real data")
-	console.log(userDataForm)
 
 	const [showPassword, setShowPassword] = useState(false)
 
@@ -39,10 +40,24 @@ const UserComp = () => {
 		})
 	}
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleCancel = () => {
+		handleCancelProp()
+	}
+
+	const handleSubmit = async (e: React.FormEvent) => {
 		// Handle form submission
 		e.preventDefault()
 		console.log("Form submitted:", userDataForm)
+		try {
+			const res = await apiClient.post("/auth/login", {
+				email: userDataForm.userEmail,
+				password: userDataForm.userPassword,
+			})
+			console.log("Login success:", res.data)
+			// maybe save token -> localStorage.setItem("auth_token", res.data.token)
+		} catch (err) {
+			console.error("Login failed:", err)
+		}
 	}
 
 	return (
@@ -64,16 +79,8 @@ const UserComp = () => {
 				/>
 			</div>
 			<footer className="h-20 bg-zinc-200 flex gap-4 items-center justify-end px-3 md:px-5">
-				<ButtonComp
-					text="Cancel"
-					theme="neutral"
-					onClick={() => console.log("cancel")}
-				/>
-				<ButtonComp
-					text="Send"
-					type="submit"
-					onClick={() => console.log("send")}
-				/>
+				<ButtonComp text="Cancel" theme="neutral" onClick={handleCancel} />
+				<ButtonComp text="Send" type="submit" onClick={handleSubmit} />
 			</footer>
 		</form>
 	)
