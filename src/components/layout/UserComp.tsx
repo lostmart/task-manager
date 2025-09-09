@@ -1,16 +1,16 @@
 import { useState } from "react"
 import InputGroup from "../ui/InputGroup"
-import { FaRegEnvelope, FaRegUser } from "react-icons/fa6"
+import { FaRegEnvelope, FaRegEye } from "react-icons/fa6"
 
 interface IUserDataForm {
-	userName: string
 	userEmail: string
+	userPassword: string
 }
 
 const UserComp = () => {
 	const [userDataForm, setUserDataForm] = useState<IUserDataForm>({
-		userName: "",
 		userEmail: "",
+		userPassword: "",
 	})
 
 	console.log(userDataForm)
@@ -26,10 +26,10 @@ const UserComp = () => {
 					userEmail: value,
 				}
 			}
-			if (inputId === "username") {
+			if (inputId === "password") {
 				return {
 					...prev,
-					userName: value,
+					userPassword: value,
 				}
 			}
 			return prev // Return previous state if no changes are made
@@ -37,16 +37,21 @@ const UserComp = () => {
 	}
 
 	return (
-		<form onSubmit={() => true} className="flex flex-col gap-4 w-full">
+		<form
+			onSubmit={() => true}
+			className="flex flex-col gap-4 w-full text-base"
+		>
 			<InputGroup
 				inputId="email"
 				icon={FaRegEnvelope}
 				onchange={(value, inputId) => handleUserDataUpdate(value, inputId)}
+				inputType="email"
 			/>
 			<InputGroup
-				inputId="username"
-				icon={FaRegUser}
+				inputId="password"
+				icon={FaRegEye}
 				onchange={(value, inputId) => handleUserDataUpdate(value, inputId)}
+				inputType="password"
 			/>
 		</form>
 	)

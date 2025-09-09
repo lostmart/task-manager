@@ -61,8 +61,8 @@ const ModalComp: React.FC = () => {
 			role="dialog"
 			aria-modal="true"
 		>
-			<div className="w-full max-w-2xl lg:max-w-104 mx-auto my-8 bg-zinc-100">
-				<header className="h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-3 flex items-center justify-between text-zinc-700 relative">
+			<div className="w-full max-w-2xl lg:max-w-xl mx-auto my-8 bg-zinc-100">
+				<header className="h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-3 md:px-5 flex items-center justify-between text-zinc-700 relative">
 					{modalData?.modalTitle}
 					<button
 						type="button"
@@ -72,10 +72,10 @@ const ModalComp: React.FC = () => {
 						<FaXmark />
 					</button>
 				</header>
-				<div className="p-3 min-h-48 flex items-center justify-center text-2xl md:text-3xl lg:text-4xl text-zinc-700">
+				<div className="p-3 min-h-48 flex items-center justify-center text-2xl md:text-3xl md:p-5 lg:text-4xl text-zinc-700">
 					{modalData?.bodyContent}
 				</div>
-				<footer className="h-20 bg-zinc-200 px-5 flex gap-4 items-center justify-end">
+				<footer className="h-20 bg-zinc-200 flex gap-4 items-center justify-end px-3 md:px-5">
 					<ButtonComp
 						text="Cancel"
 						theme="neutral"

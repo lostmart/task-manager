@@ -4,10 +4,16 @@ import { IconType } from "react-icons"
 interface InputGroupProps {
 	inputId: string
 	icon: IconType
+	inputType?: string
 	onchange?: (value: string, inputId: string) => void
 }
 
-const InputGroup = ({ inputId, icon: Icon, onchange }: InputGroupProps) => {
+const InputGroup = ({
+	inputId,
+	icon: Icon,
+	inputType,
+	onchange,
+}: InputGroupProps) => {
 	const [inputVal, setInputVal] = useState<string>("")
 	const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputVal(e.target.value)
@@ -20,7 +26,7 @@ const InputGroup = ({ inputId, icon: Icon, onchange }: InputGroupProps) => {
 				<Icon />
 			</label>
 			<input
-				type="text"
+				type={inputType ? inputType : "text"}
 				id={inputId}
 				placeholder={inputId}
 				className="p-2 w-full"
