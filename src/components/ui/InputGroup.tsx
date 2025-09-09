@@ -23,7 +23,7 @@ const InputGroup = ({ inputId, icon: Icon, onchange }: InputGroupProps) => {
 				type="text"
 				id={inputId}
 				placeholder={inputId}
-				className="p-3"
+				className="p-2 w-full"
 				value={inputVal}
 				onInput={handleInput}
 			/>
