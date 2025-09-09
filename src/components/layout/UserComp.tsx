@@ -37,7 +37,7 @@ const UserComp = () => {
 	}
 
 	return (
-		<form onSubmit={() => true} className="flex flex-col gap-4">
+		<form onSubmit={() => true} className="flex flex-col gap-4 w-full">
 			<InputGroup
 				inputId="email"
 				icon={FaRegEnvelope}
