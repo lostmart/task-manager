@@ -25,7 +25,7 @@ export const useBackendHealth = (checkInterval: number = 30000) => {
 			setStatus((prev) => ({ ...prev, isLoading: true, error: null }))
 
 			// Use a dedicated health check endpoint or a lightweight endpoint
-			const response = await apiClient.get("/api/helth", {
+			const response = await apiClient.get("/api/health", {
 				timeout: 10000, // 10 second timeout
 			})
 

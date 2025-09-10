@@ -1,9 +1,12 @@
 // context
 import { useContext } from "react"
 import ModalContext from "../context/ModalContext"
-import ErrorContext from "../context/ErrorContext"
+import sleepingImg from "../assets/sleeping.gif"
 
 import { useBackendHealth } from "../hooks/useBackendHealth"
+//const ErrorContext = useContext(ModalContext)
+
+import { ErrorContextType, TyeType } from "../types/error.type"
 
 // components
 import ButtonComp from "../components/ui/ButtonComp"
@@ -11,21 +14,38 @@ import UserComp from "../components/layout/UserComp"
 
 const Home = () => {
 	const { setModalData } = useContext(ModalContext)
-	const { setError, setType, setTip } = useContext(ErrorContext)
+	//const { setError } = useContext(ErrorContext)
 
 	const { isOnline } = useBackendHealth()
 
 	const logIn = () => {
 		if (!isOnline) {
-			/*  Error Context  */
-			setError("yep this is an error ...")
-			setType("network")
-			setTip("Our rest API is waking up ... sorry about that.")
+			// create error
+			const onlineError: ErrorContextType = {
+				error: "Backend is offline",
+				type: "network" as TyeType,
+				tip: "Probably our server is sleeping 🙄 Give it a sec... he'll be up and running in no time ⌚",
+			}
 
 			setModalData((prev) => ({
 				...prev,
 				showModal: true,
-				bodyContent: <div>this is really really sad !!</div>,
+				bodyContent: (
+					<div className="text-center">
+						<h3>{onlineError.error}</h3>
+						<p className="text-lg text-zinc-400">
+							Errot type: {onlineError.type}
+						</p>
+						<figure className="p-5">
+							<img
+								className="mx-auto block max-w-28 mix-blend-multiply"
+								src={sleepingImg}
+								alt="offline"
+							/>
+							<figcaption className="text-lg">{onlineError.tip}</figcaption>
+						</figure>
+					</div>
+				),
 				modalTitle: "That's an error !!",
 				titleColor: "danger",
 			}))

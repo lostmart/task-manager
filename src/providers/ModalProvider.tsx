@@ -10,7 +10,7 @@ interface ModalProviderProps {
 const emptyData: IModalBody = {
 	showModal: false,
 	bodyContent: "Hello test",
-	modalTitle: "",
+	modalTitle: "Test title",
 	confirmFn: () => true,
 }
 

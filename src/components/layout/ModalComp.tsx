@@ -62,7 +62,7 @@ const ModalComp: React.FC<IModalBody> = () => {
 		>
 			<div className="w-full max-w-2xl lg:max-w-xl mx-auto my-8 bg-zinc-100">
 				<header
-					className={`"h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-3 md:px-5 flex items-center justify-between relative" ${
+					className={`"h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 p-5 flex items-center justify-between relative " ${
 						modalData?.titleColor ? "text-red-700" : "text-zinc-700"
 					} `}
 				>
