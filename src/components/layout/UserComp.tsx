@@ -12,6 +12,7 @@ interface IUserDataForm {
 
 interface UserCompProps {
 	handleCancelProp: () => void
+	onLoginSuccess: (userData: any) => void
 }
 
 interface IResponseError {
@@ -22,7 +23,10 @@ interface IResponseError {
 	statusText: string
 }
 
-const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
+const UserComp: React.FC<UserCompProps> = ({
+	handleCancelProp,
+	onLoginSuccess,
+}) => {
 	const [userDataForm, setUserDataForm] = useState<IUserDataForm>({
 		userEmail: "",
 		userPassword: "",
@@ -70,6 +74,11 @@ const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 			})
 			console.log("Login success:", res.data)
 			setIsLoading(false)
+			// success
+			localStorage.setItem("token", res.data)
+			onLoginSuccess(res.data)
+			handleCancelProp()
+
 			// maybe save token -> localStorage.setItem("auth_token", res.data.token)
 		} catch (err: IResponseError | any) {
 			console.error("Login failed:", err?.response)
@@ -78,8 +87,6 @@ const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 			setIsLoading(false)
 		}
 	}
-
-	
 
 	return (
 		<form

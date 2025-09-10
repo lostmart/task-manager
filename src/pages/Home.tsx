@@ -11,14 +11,18 @@ import { ErrorContextType, TyeType } from "../types/error.type"
 // components
 import ButtonComp from "../components/ui/ButtonComp"
 import UserComp from "../components/layout/UserComp"
+import { useNavigate } from "react-router-dom"
 
 const Home = () => {
 	const { setModalData } = useContext(ModalContext)
 	//const { setError } = useContext(ErrorContext)
 
+	const navigate = useNavigate()
+
 	const { isOnline } = useBackendHealth()
 
 	const logIn = () => {
+
 		if (!isOnline) {
 			// create error
 			const onlineError: ErrorContextType = {
@@ -55,12 +59,11 @@ const Home = () => {
 		setModalData((prev) => ({
 			...prev,
 			showModal: true,
-			bodyContent: <UserComp handleCancelProp={handleCancel} />,
+			bodyContent: <UserComp handleCancelProp={handleCancel} onLoginSuccess={() => navigate("/projects")} />,
 			modalTitle: "Log In",
 		}))
 	}
 	const handleCancel = () => {
-		console.log("Cancel")
 		setModalData((prev) => ({
 			...prev,
 			showModal: false,
