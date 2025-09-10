@@ -1,6 +1,7 @@
 // context
 import { useContext } from "react"
 import ModalContext from "../context/ModalContext"
+import ErrorContext from "../context/ErrorContext"
 
 import { useBackendHealth } from "../hooks/useBackendHealth"
 
@@ -10,12 +11,24 @@ import UserComp from "../components/layout/UserComp"
 
 const Home = () => {
 	const { setModalData } = useContext(ModalContext)
+	const { setError, setType, setTip } = useContext(ErrorContext)
 
 	const { isOnline } = useBackendHealth()
 
 	const logIn = () => {
 		if (!isOnline) {
-			alert("Service temporarily unavailable. Please try again later.")
+			/*  Error Context  */
+			setError("yep this is an error ...")
+			setType("network")
+			setTip("Our rest API is waking up ... sorry about that.")
+
+			setModalData((prev) => ({
+				...prev,
+				showModal: true,
+				bodyContent: <div>this is really really sad !!</div>,
+				modalTitle: "That's an error !!",
+				titleColor: "danger",
+			}))
 			return
 		}
 

@@ -2,6 +2,7 @@ import { createContext } from "react"
 
 export interface IModalBody {
 	modalTitle: string
+	titleColor?: "primary" | "secondary" | "danger"
 	showModal: boolean
 	bodyContent: string | React.ReactNode // Accepts either a string or a react node
 	confirmFn: () => void

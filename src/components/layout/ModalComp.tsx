@@ -1,8 +1,8 @@
 import { FaXmark } from "react-icons/fa6"
 import { useContext, useEffect, useCallback } from "react"
-import ModalContext from "../../context/ModalContext"
+import ModalContext, { IModalBody } from "../../context/ModalContext"
 
-const ModalComp: React.FC = () => {
+const ModalComp: React.FC<IModalBody> = () => {
 	const { modalData, setModalData } = useContext(ModalContext)
 
 	// Memoized version of closeModal using useCallback
@@ -61,7 +61,11 @@ const ModalComp: React.FC = () => {
 			aria-modal="true"
 		>
 			<div className="w-full max-w-2xl lg:max-w-xl mx-auto my-8 bg-zinc-100">
-				<header className="h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-3 md:px-5 flex items-center justify-between text-zinc-700 relative">
+				<header
+					className={`"h-20 border-b text-2xl md:text-3xl lg:text-4xl border-zinc-200 px-3 md:px-5 flex items-center justify-between relative" ${
+						modalData?.titleColor ? "text-red-700" : "text-zinc-700"
+					} `}
+				>
 					{modalData?.modalTitle}
 					<button
 						type="button"

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import ModalContext from "./ModalContext"
+import ModalContext from "../context/ModalContext"
 
-import { IModalBody } from "./ModalContext"
+import { IModalBody } from "../context/ModalContext"
 
 interface ModalProviderProps {
 	children: React.ReactNode
