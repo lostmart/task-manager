@@ -2,6 +2,8 @@
 import { useContext } from "react"
 import ModalContext from "../context/ModalContext"
 
+import { useBackendHealth } from "../hooks/useBackendHealth"
+
 // components
 import ButtonComp from "../components/ui/ButtonComp"
 import UserComp from "../components/layout/UserComp"
@@ -9,7 +11,14 @@ import UserComp from "../components/layout/UserComp"
 const Home = () => {
 	const { setModalData } = useContext(ModalContext)
 
+	const { isOnline } = useBackendHealth()
+
 	const logIn = () => {
+		if (!isOnline) {
+			alert("Service temporarily unavailable. Please try again later.")
+			return
+		}
+
 		setModalData((prev) => ({
 			...prev,
 			showModal: true,
@@ -31,7 +40,7 @@ const Home = () => {
 	return (
 		<section className="min-h-80 flex flex-col items-center justify-center">
 			<h2 className="my-24 text-4xl leading-subTitle text-zinc-700 max-w-lg text-center text-shadow ">
-				Welcome to PMT (Poject Management Tool)
+				Welcome to PMT (Project Management Tool)
 			</h2>
 			<div className="flex flex-col md:flex-row gap-7">
 				<ButtonComp text="LogIn" theme="secondary" onClick={logIn} />

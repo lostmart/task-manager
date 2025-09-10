@@ -3,6 +3,7 @@ import InputGroup from "../ui/InputGroup"
 import { FaRegEnvelope, FaLock, FaRegEye, FaRegEyeSlash } from "react-icons/fa6"
 import ButtonComp from "../ui/ButtonComp"
 import apiClient from "../../api/client"
+import RenderLoading from "../ui/LoadinComp"
 
 interface IUserDataForm {
 	userEmail: string
@@ -26,6 +27,8 @@ const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 		userEmail: "",
 		userPassword: "",
 	})
+
+	const [isLoading, setIsLoading] = useState(false)
 
 	const [error, setError] = useState<string>("")
 
@@ -55,6 +58,7 @@ const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 	}
 
 	const handleSubmit = async (e: React.FormEvent) => {
+		setIsLoading(true)
 		// Handle form submission
 		setError("")
 		e.preventDefault()
@@ -65,16 +69,23 @@ const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 				password: userDataForm.userPassword,
 			})
 			console.log("Login success:", res.data)
+			setIsLoading(false)
 			// maybe save token -> localStorage.setItem("auth_token", res.data.token)
 		} catch (err: IResponseError | any) {
 			console.error("Login failed:", err?.response)
 			const error = err?.response?.data.error
 			setError(error)
+			setIsLoading(false)
 		}
 	}
 
+	
+
 	return (
-		<form onSubmit={handleSubmit} className="flex flex-col w-full text-base">
+		<form
+			onSubmit={handleSubmit}
+			className="flex flex-col w-full text-base relative"
+		>
 			<div className="p-5 flex flex-col gap-4">
 				<InputGroup
 					inputId="email"
@@ -92,6 +103,7 @@ const UserComp: React.FC<UserCompProps> = ({ handleCancelProp }) => {
 				/>
 				<div>{error && <p className="text-red-500">{error}</p>}</div>
 			</div>
+			{isLoading && <RenderLoading />}
 			<footer className="h-20 bg-zinc-200 flex gap-4 items-center justify-end px-3 md:px-5">
 				<ButtonComp text="Cancel" theme="neutral" onClick={handleCancel} />
 				<ButtonComp text="Send" type="submit" onClick={handleSubmit} />
