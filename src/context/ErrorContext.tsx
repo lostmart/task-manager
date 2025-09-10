@@ -1,22 +1,24 @@
+// ErrorContext.tsx
 import { createContext } from "react"
 
-export type ErrorType = "validation" | "auth" | "network" | "other"
+export type ErrorType = "validation" | "auth" | "network" | "other" | null
 
 export interface IErrorContent {
-	message: string | React.ReactNode // Accepts either a string or a react node
+	message: string | React.ReactNode
 	code?: number
-	tip: string
+	tip?: string
 	type: ErrorType
+	confirmFn: () => void
 }
 
 interface IErrorContentProps {
-	error: IErrorContent | null
-	setError: React.Dispatch<React.SetStateAction<IErrorContent | null>>
+	errorData: IErrorContent | null
+	setErrorData: React.Dispatch<React.SetStateAction<IErrorContent>> // Changed from setError to setErrorData
 }
 
 const ErrorContext = createContext<IErrorContentProps>({
-	error: null,
-	setError: (prev) => {
+	errorData: null,
+	setErrorData: (prev) => {
 		return {
 			...prev,
 		}

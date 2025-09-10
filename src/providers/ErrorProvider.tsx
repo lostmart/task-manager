@@ -1,26 +1,21 @@
 import React, { useState } from "react"
-import ErrorContext, { TyeType } from "../context/ErrorContext"
+import ErrorContext, { IErrorContent } from "../context/ErrorContext"
 
 interface ErrorProviderProps {
 	children: React.ReactNode
 }
 
+const emptyErrorData: IErrorContent = {
+	message: "",
+	type: null,
+	confirmFn: () => true,
+}
+
 const ErrorProvider: React.FC<ErrorProviderProps> = ({ children }) => {
-	const [error, setError] = useState<string | null>(null)
-	const [tip, setTip] = useState<string | null>(null)
-	const [type, setType] = useState<TyeType>("other")
+	const [errorData, setErrorData] = useState(emptyErrorData)
 
 	return (
-		<ErrorContext.Provider
-			value={{
-				error,
-				setError,
-				tip,
-				setTip,
-				type,
-				setType,
-			}}
-		>
+		<ErrorContext.Provider value={{ errorData, setErrorData }}>
 			{children}
 		</ErrorContext.Provider>
 	)
