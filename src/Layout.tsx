@@ -17,7 +17,12 @@ const Layout = () => {
 			<React.StrictMode>
 				<ErrorProvider>
 					<ModalProvider>
-						<ModalComp />
+						<ModalComp
+							modalTitle="Modal Title"
+							showModal={true}
+							bodyContent={<p>This is the modal body content.</p>}
+							confirmFn={() => console.log("Modal confirmed!")}
+						/>
 						<BannerComp text="Task Management" />
 						<main className="bg-zinc-100">
 							<RouterProvider
