@@ -6,18 +6,21 @@ interface ProjectProviderProps {
 	children: React.ReactNode
 }
 
-const emptyProject: Project = {
-	projectName: "",
-	ownerId: 0,
-	manager: 0,
-	description: "",
-}
+const emptyProjects: Project[] = [
+	{
+		id: 0,
+		projectName: "",
+		ownerId: 0,
+		manager: 0,
+		description: "",
+	},
+]
 
 const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) => {
-	const [project, setProjects] = useState(emptyProject)
+	const [projects, setProjects] = useState(emptyProjects)
 
 	return (
-		<ProjectsContext.Provider value={{ project, setProjects }}>
+		<ProjectsContext.Provider value={{ projects, setProjects }}>
 			{children}
 		</ProjectsContext.Provider>
 	)
