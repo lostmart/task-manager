@@ -4,6 +4,7 @@ import ModalContext from "../context/ModalContext"
 import sleepingImg from "../assets/sleeping.gif"
 
 import { useBackendHealth } from "../hooks/useBackendHealth"
+import LoadinComp from "../components/ui/LoadinComp"
 //const ErrorContext = useContext(ModalContext)
 
 import { ErrorContextType, TyeType } from "../types/error.type"
@@ -19,16 +20,19 @@ const Home = () => {
 
 	const navigate = useNavigate()
 
-	const { isOnline } = useBackendHealth()
+	const { isOnline, isLoading } = useBackendHealth()
 
 	const logIn = () => {
+		if (isLoading) {
+			return <LoadinComp />
+		}
 
 		if (!isOnline) {
 			// create error
 			const onlineError: ErrorContextType = {
 				error: "Backend is offline",
 				type: "network" as TyeType,
-				tip: "Probably our server is sleeping 🙄 Give it a sec... he'll be up and running in no time ⌚",
+				tip: "Probably our server is sleeping 🙄 Give it a sec... try again later ⌚",
 			}
 
 			setModalData((prev) => ({
@@ -59,7 +63,12 @@ const Home = () => {
 		setModalData((prev) => ({
 			...prev,
 			showModal: true,
-			bodyContent: <UserComp handleCancelProp={handleCancel} onLoginSuccess={() => navigate("/projects")} />,
+			bodyContent: (
+				<UserComp
+					handleCancelProp={handleCancel}
+					onLoginSuccess={() => navigate("/projects")}
+				/>
+			),
 			modalTitle: "Log In",
 		}))
 	}

@@ -5,6 +5,7 @@ import { createBrowserRouter } from "react-router-dom"
 import Home from "./pages/Home.tsx"
 import ErrorPage from "./pages/ErrorPage.tsx"
 import ProjectsPage from "./pages/ProjectsPage.tsx"
+import SingleProject from "./pages/SingleProject.tsx"
 
 const router = createBrowserRouter(
 	[
@@ -16,6 +17,11 @@ const router = createBrowserRouter(
 		{
 			path: "/projects",
 			element: <ProjectsPage />,
+			errorElement: <ErrorPage />,
+		},
+		{
+			path: "/projects/:id",
+			element: <SingleProject />,
 			errorElement: <ErrorPage />,
 		},
 	],
