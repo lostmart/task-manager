@@ -1,5 +1,5 @@
 // context
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import ModalContext from "../context/ModalContext"
 import sleepingImg from "../assets/sleeping.gif"
 
@@ -21,6 +21,13 @@ const Home = () => {
 	const navigate = useNavigate()
 
 	const { isOnline, isLoading } = useBackendHealth()
+
+	useEffect(() => {
+		const token = localStorage.getItem("token")
+		if (token) {
+			navigate("/projects")
+		}
+	}, [])
 
 	const logIn = () => {
 		if (isLoading) {

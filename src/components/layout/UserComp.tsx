@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import InputGroup from "../ui/InputGroup"
 import { FaRegEnvelope, FaLock, FaRegEye, FaRegEyeSlash } from "react-icons/fa6"
 import ButtonComp from "../ui/ButtonComp"
@@ -13,6 +13,8 @@ interface IUserDataForm {
 interface UserCompProps {
 	handleCancelProp: () => void
 	onLoginSuccess: (userData: any) => void
+	// Optional prop to pass initial data
+	initialData?: Partial<IUserDataForm>
 }
 
 interface IResponseError {
@@ -26,21 +28,29 @@ interface IResponseError {
 const UserComp: React.FC<UserCompProps> = ({
 	handleCancelProp,
 	onLoginSuccess,
+	initialData,
 }) => {
+	// Initialize state with default values or initialData
 	const [userDataForm, setUserDataForm] = useState<IUserDataForm>({
-		userEmail: "",
-		userPassword: "",
+		userEmail: initialData?.userEmail || "",
+		userPassword: initialData?.userPassword || "",
 	})
 
+	// Alternative: Use useEffect if you need to set data after component mounts
+	useEffect(() => {
+		// Pre-fill email and password
+		setUserDataForm({
+			userEmail: "admin@example.com", // Pre-fill email
+			userPassword: "admin123@@", // Pre-fill password
+		})
+	}, [])
+
 	const [isLoading, setIsLoading] = useState(false)
-
 	const [error, setError] = useState<string>("")
-
 	const [showPassword, setShowPassword] = useState(false)
 
 	const handleUserDataUpdate = (value: string, inputId: string) => {
 		setUserDataForm((prev) => {
-			// prev is guaranteed to exist since we no longer allow null
 			if (inputId === "email") {
 				return {
 					...prev,
@@ -53,7 +63,7 @@ const UserComp: React.FC<UserCompProps> = ({
 					userPassword: value,
 				}
 			}
-			return prev // Return previous state if no changes are made
+			return prev
 		})
 	}
 
@@ -63,23 +73,24 @@ const UserComp: React.FC<UserCompProps> = ({
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		setIsLoading(true)
-		// Handle form submission
 		setError("")
 		e.preventDefault()
+
 		console.log("Form submitted:", userDataForm)
+
 		try {
 			const res = await apiClient.post("/api/users/login", {
 				email: userDataForm.userEmail,
 				password: userDataForm.userPassword,
 			})
+
 			console.log("Login success:", res.data)
 			setIsLoading(false)
-			// success
+
+			// Store token (Note: Consider using secure storage in production)
 			localStorage.setItem("token", res.data)
 			onLoginSuccess(res.data)
 			handleCancelProp()
-
-			// maybe save token -> localStorage.setItem("auth_token", res.data.token)
 		} catch (err: IResponseError | any) {
 			console.error("Login failed:", err?.response)
 			const error = err?.response?.data.error
@@ -97,12 +108,14 @@ const UserComp: React.FC<UserCompProps> = ({
 				<InputGroup
 					inputId="email"
 					icon={FaRegEnvelope}
+					value={userDataForm.userEmail} // Add value prop
 					onchange={(value, inputId) => handleUserDataUpdate(value, inputId)}
 					inputType="email"
 				/>
 				<InputGroup
 					inputId="password"
 					icon={FaLock}
+					value={userDataForm.userPassword} // Add value prop
 					onchange={handleUserDataUpdate}
 					inputType={showPassword ? "text" : "password"}
 					trailingIcon={showPassword ? FaRegEyeSlash : FaRegEye}
