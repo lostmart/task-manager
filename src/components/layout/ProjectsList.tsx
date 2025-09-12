@@ -6,13 +6,16 @@ import { Project } from "../../types/project.type"
 import ButtonComp from "../ui/ButtonComp"
 import HelpMenuGroup from "./HelpMenuGroup"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const ProjectsList = () => {
 	const { projects, isLoading, error, refetch } = useProjects()
 	const [activeMenuId, setActiveMenuId] = useState<number | string | null>(null)
 
+	const navigate = useNavigate()
+
 	const onArticleClick = (id: number | string) => {
-		console.log(id)
+		navigate(`/projects/${id}`)
 	}
 
 	const handleMenuToggle = (
@@ -27,6 +30,7 @@ const ProjectsList = () => {
 	const handleMenuAction = (action: string, projectId: number | string) => {
 		console.log(`${action} clicked for project:`, projectId)
 		setActiveMenuId(null) // Close menu after action
+		if (action === "view") return navigate(`/projects/${projectId}`)
 	}
 
 	// Show loading state
@@ -68,7 +72,7 @@ const ProjectsList = () => {
 					<article
 						onClick={() => onArticleClick(project.id)}
 						key={project.id}
-						className="flex flex-col items-center p-4 bg-slate-100 mt-2 relative hover:bg-slate-200 transition-colors"
+						className="flex flex-col items-center p-4 bg-slate-100 mt-2 cursor-pointer relative hover:bg-slate-200 transition-colors"
 					>
 						<h2 className="flex justify-between w-full">
 							{project.projectName}
