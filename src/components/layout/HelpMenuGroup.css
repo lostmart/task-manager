@@ -1,0 +1,12 @@
+.link-group {
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    padding: 0;
+
+}
+
+
+.link-group.active {
+    height: 187px;
+}

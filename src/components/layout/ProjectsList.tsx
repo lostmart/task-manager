@@ -1,12 +1,34 @@
 import { FaEllipsisVertical } from "react-icons/fa6"
-import { Link } from "react-router-dom"
+// import { Link } from "react-router-dom"
 import { useProjects } from "../../hooks/useProjectFetch"
 import RenderLoading from "../ui/LoadinComp"
 import { Project } from "../../types/project.type"
 import ButtonComp from "../ui/ButtonComp"
+import HelpMenuGroup from "./HelpMenuGroup"
+import { useState } from "react"
 
 const ProjectsList = () => {
 	const { projects, isLoading, error, refetch } = useProjects()
+	const [activeMenuId, setActiveMenuId] = useState<number | string | null>(null)
+
+	const onArticleClick = (id: number | string) => {
+		console.log(id)
+	}
+
+	const handleMenuToggle = (
+		projectId: number | string,
+		e: React.MouseEvent
+	) => {
+		e.preventDefault()
+		e.stopPropagation()
+		setActiveMenuId(activeMenuId === projectId ? null : projectId)
+	}
+
+	const handleMenuAction = (action: string, projectId: number | string) => {
+		console.log(`${action} clicked for project:`, projectId)
+		setActiveMenuId(null) // Close menu after action
+	}
+
 	// Show loading state
 	if (isLoading) {
 		return (
@@ -42,23 +64,29 @@ const ProjectsList = () => {
 				</div>
 			) : (
 				projects.map((project: Project) => (
-					<Link key={project.id} to={`/projects/${project.id}`}>
-						<article className="flex flex-col items-center p-4 bg-slate-100 mt-2 relative hover:bg-slate-200 transition-colors">
-							<h2 className="flex justify-between w-full">
-								{project.projectName}
-								<button
-									className="p-2 bg-slate-100 hover:bg-slate-300 rounded"
-									onClick={(e) => {
-										e.preventDefault() // Prevent navigation when clicking the button
-										console.log("Options clicked for project:", project.id)
-									}}
-								>
-									<FaEllipsisVertical />
-								</button>
-							</h2>
-							<p className="text-gray-600">{project.description}</p>
-						</article>
-					</Link>
+					// <Link key={project.id} to={`/projects/${project.id}`}>
+					<article
+						onClick={() => onArticleClick(project.id)}
+						key={project.id}
+						className="flex flex-col items-center p-4 bg-slate-100 mt-2 relative hover:bg-slate-200 transition-colors"
+					>
+						<h2 className="flex justify-between w-full">
+							{project.projectName}
+							<button
+								className="p-2 bg-slate-100 hover:bg-slate-300 rounded"
+								onClick={(e) => handleMenuToggle(project.id, e)}
+							>
+								<FaEllipsisVertical />
+							</button>
+						</h2>
+						<HelpMenuGroup
+							isVisible={activeMenuId === project.id}
+							onMenuAction={(action) => handleMenuAction(action, project.id)}
+							onClose={() => setActiveMenuId(null)}
+						/>
+						<p className="text-gray-600">{project.description}</p>
+					</article>
+					// </Link>
 				))
 			)}
 		</div>
