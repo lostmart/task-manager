@@ -31,6 +31,7 @@ const ProjectsList = () => {
 		console.log(`${action} clicked for project:`, projectId)
 		setActiveMenuId(null) // Close menu after action
 		if (action === "view") return navigate(`/projects/${projectId}`)
+		// if (action === "edit") return navigate(`/projects/${projectId}/edit`)
 	}
 
 	// Show loading state
