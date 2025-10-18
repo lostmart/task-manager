@@ -14,8 +14,6 @@ const ProjectsList = () => {
 		navigate(`/projects/${id}`)
 	}
 
-	
-
 	// Show loading state
 	if (isLoading) {
 		return (
@@ -54,33 +52,11 @@ const ProjectsList = () => {
 					<CardComp
 						onCardClick={() => onArticleClick(project.id)}
 						key={project.id}
-						projectName={project.projectName}
+						title={project.projectName}
 						description={project.description}
-						projectId={project.id}
+						cardId={project.id}
+						helpMenuGroup={true}
 					/>
-					// <Link key={project.id} to={`/projects/${project.id}`}>
-					// <article
-					// 	onClick={() => onArticleClick(project.id)}
-					// 	key={project.id}
-					// 	className="flex flex-col items-center p-4 bg-slate-100 mt-2 cursor-pointer relative hover:bg-slate-200 transition-colors"
-					// >
-					// 	<h2 className="flex justify-between w-full">
-					// 		{project.projectName}
-					// 		<button
-					// 			className="p-2 bg-slate-100 hover:bg-slate-300 rounded"
-					// 			onClick={(e) => handleMenuToggle(project.id, e)}
-					// 		>
-					// 			<FaEllipsisVertical />
-					// 		</button>
-					// 	</h2>
-					// 	<HelpMenuGroup
-					// 		isVisible={activeMenuId === project.id}
-					// 		onMenuAction={(action) => handleMenuAction(action, project.id)}
-					// 		onClose={() => setActiveMenuId(null)}
-					// 	/>
-					// 	<p className="text-gray-600">{project.description}</p>
-					// </article>
-					// </Link>
 				))
 			)}
 		</div>

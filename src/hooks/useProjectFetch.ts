@@ -26,7 +26,7 @@ export const useProjects = (): UseProjectsReturn => {
 		throw new Error("useProjects must be used within a ProjectProvider")
 	}
 
-	// Fix: Make sure this matches your context structure
+	// Destructure context
 	const { projects, setProjects } = context
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
