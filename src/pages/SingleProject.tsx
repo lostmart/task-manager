@@ -41,7 +41,7 @@ const SingleProject = () => {
 	return (
 		<section>
 			<h1 className="text-3xl text-center py-3">{project.projectName}</h1>
-			<div>
+			<div className="container-xl p-2 lg:container mx-auto">
 				<CardComp
 					title={project.projectName}
 					description={project.description}
